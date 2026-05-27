@@ -1,6 +1,6 @@
-## Flash Loan Example
+# Flash Loan Example
 
-# This Rust-based Solana client enables atomic flash loans via the Save Finance (formerly Solend) protocol.
+## This Rust-based Solana client enables atomic flash loans via the Save Finance (formerly Solend) protocol.
 
 That's a docs with mainnet addresses: 
 - https://docs.save.finance/architecture/addresses/mainnet/main-pools
