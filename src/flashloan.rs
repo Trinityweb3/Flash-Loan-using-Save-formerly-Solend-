@@ -14,6 +14,9 @@ pub async fn execute_flash_loan(
     rpc_url: &str,
     private_key_str: &str,
     loan_amount: u64,
+    reserve_account: Pubkey,
+    reserve_liquidity_supply: Pubkey,
+    liquidity_mint: Pubkey
 ) -> Result<(), Box<dyn std::error::Error>> {
     let client = RpcClient::new_with_commitment(rpc_url.to_string(), CommitmentConfig::confirmed());
     let payer = Keypair::from_base58_string(private_key_str);
@@ -22,10 +25,6 @@ pub async fn execute_flash_loan(
     let program_id = Pubkey::from_str("So1endDq2YkqhipRh3WViPa8hdiSpxWy6z3Z6tMCpAo")?;
     let lending_market = Pubkey::from_str("4UpD2fh7xH3VP9QQaXtsS1YY3bxzWhtfpks7FatyKvdY")?;
     let market_authority = Pubkey::from_str("DdZR6zRFiUt4S5mg7AV1uKB2z1f1WzcNYCaTEEWPAuby")?;
-
-    let reserve_account = Pubkey::from_str("BgxfHJDzm44T7XG68MYKx7YisTjZu73tVovyZSjJMpmw")?; 
-    let reserve_liquidity_supply = Pubkey::from_str("8SheGtsopRUDzdiD6v6BR9a6bqZ9QwywYQY99Fp5meNf")?; 
-    let liquidity_mint = Pubkey::from_str("EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v")?; 
     
     let user_token_account = get_associated_token_address(&payer.pubkey(), &liquidity_mint);
 
@@ -96,7 +95,7 @@ pub async fn execute_flash_loan(
         None => {
             println!("simulation successful! Sending to mainnet...");
             match client.send_and_confirm_transaction(&transaction).await {
-                Ok(signature) => println!("success! Tx hash: {}", signature),
+                Ok(signature) => println!("success! Tx hash: https://solscan.io/tx/{}", signature),
                 Err(err) => println!("sending error: {:?}", err),
             }
         }
